@@ -37,8 +37,16 @@ def main():
     #     ],
     # ]
     # Define the window layout
+    # live_stream_element = sg.Image(filename="", key=IMAGE_KEY)
+    # control_element = sg.Graph(
+    #     canvas_size=RESOLUTION,
+    #     graph_bottom_left=(0, 0),
+    #     graph_top_right=RESOLUTION,
+    #     background_color='white',
+    #     key=GRAPH_KEY
+    # )
     layout = [
-        [sg.Text("OpenCV Demo", size=(60, 1), justification="center")],
+        [sg.Text("PID Controoler", size=(60, 1), justification="center")],
         [
             sg.Image(filename="", key=IMAGE_KEY),
             sg.Graph(
@@ -129,9 +137,8 @@ def main():
     while True:
         event, values = window.read(timeout=20)
         graph = window.Element(GRAPH_KEY)
-        graph.DrawRectangle((200, 200), (250, 300), line_color="red")
-        import pdb
-        pdb.set_trace()
+        # graph.DrawRectangle((200, 200), (250, 300), line_color="red")
+        graph.DrawCircle()
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
 
@@ -163,7 +170,7 @@ def main():
 
         imgbytes = cv2.imencode(".png", frame)[1].tobytes()
         window[IMAGE_KEY].update(data=imgbytes)
-        window[GRAPH_KEY].DrawImage(data=imgbytes, location=(0, RESOLUTION[1]))
+        graph.DrawImage(data=imgbytes, location=(0, RESOLUTION[1]))
 
     window.close()
 
